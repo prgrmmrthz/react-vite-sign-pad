@@ -31,8 +31,17 @@ export default function App() {
   /* a function that uses the canvas ref to trim the canvas
   from white spaces via a method given by react-signature-canvas
   then saves it in our state */
-  const save = () =>
+  const save = () =>{
     setImageURL(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
+    const a = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
+
+    fetch(a)
+    .then(res => res.blob())
+    .then(blob => {
+      const file = new File([blob], "File name",{ type: "image/png" });
+      console.log(file);
+    })
+  }
 
   return (
     <div>
@@ -68,7 +77,6 @@ export default function App() {
           />
           <button onClick={save}>Save</button>
           <button onClick={clear}>Clear</button>
-          <button onClick={close}>Close</button>
         </Box>
       </Modal>
     </div>
